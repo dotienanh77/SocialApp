@@ -1,20 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable no-alert */
 import React from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Button,
-} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 const Dots = ({selected}) => {
   let backgroundColor;
-
   backgroundColor = selected ? 'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.3)';
-
   return (
     <View
       style={{
@@ -76,10 +67,10 @@ const OnboardingScreen = ({navigation}) => {
   );
 };
 export default OnboardingScreen;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+// });
