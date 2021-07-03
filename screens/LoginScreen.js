@@ -1,11 +1,18 @@
 /* eslint-disable no-alert */
 import React from 'react';
 import {Text, View, StyleSheet, Button} from 'react-native';
-const LoginScreen = () => {
+
+import AntDesign from 'react-native-vector-icons/AntDesign';
+
+const LoginScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
+      <AntDesign name="user" size={25} color="#666" />
       <Text>Login Screen</Text>
-      <Button title="Click here" onPress={() => alert('button clicked!')} />
+      <Button
+        title="Click here"
+        onPress={() => navigation.navigate('Signup')}
+      />
     </View>
   );
 };

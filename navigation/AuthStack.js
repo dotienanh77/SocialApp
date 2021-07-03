@@ -1,38 +1,49 @@
-/* eslint-disable react/react-in-jsx-scope */
-import react, {createContext, useState} from 'react';
-import auth from '@react-native-firebase/auth';
+import React, {useEffect, useState} from 'react';
+import {createStackNavigator} from '@react-navigation/stack';
+import OnboardingScreen from '../screens/OnboardingScreen';
+import LoginScreen from '../screens/LoginScreen';
+import SignupScreen from '../screens/SignupScreen';
 
-export const AuthContext = createContext();
-export const AuthProvider = ({children}) => {
-  const [user, setUser] = useState(null);
+import AsyncStorage from '@react-native-community/async-storage';
+
+const Stack = createStackNavigator();
+
+const AuthStack = () => {
+  const [isFirstLaunch, setIsFirstLaunch] = useState(null);
+  let routeName;
+  useEffect(() => {
+    AsyncStorage.getItem('alreadyLaunched').then(value => {
+      if (value == null) {
+        AsyncStorage.setItem('alreadyLaunched', 'true');
+        setIsFirstLaunch(true);
+      } else {
+        setIsFirstLaunch(false);
+      }
+    });
+  }, []);
+  if (isFirstLaunch === null) {
+    return null;
+  } else if (isFirstLaunch === true) {
+    routeName = 'Onboarding';
+  } else {
+    routeName = 'Login';
+  }
+
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        setUser,
-        login: async (email, password) => {
-          try {
-            await auth().signInWithEmailAndPassword(email, password);
-          } catch (e) {
-            console.log(e);
-          }
-        },
-        register: async (email, password) => {
-          try {
-            await auth().signInWithEmailAndPassword(email, password);
-          } catch (e) {
-            console.log(e);
-          }
-        },
-        logout: async (email, password) => {
-          try {
-            await auth().signOut();
-          } catch (e) {
-            console.log(e);
-          }
-        },
-      }}>
-      {children}
-    </AuthContext.Provider>
+    <Stack.Navigator initialRouteName={routeName}>
+      <Stack.Screen
+        name="Onboarding"
+        component={OnboardingScreen}
+        options={{header: () => null}}
+      />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{header: () => null}}
+      />
+      <Stack.Screen name="Signup" component={SignupScreen} />
+    </Stack.Navigator>
   );
 };
+
+export default AuthStack;
