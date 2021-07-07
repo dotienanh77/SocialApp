@@ -1,15 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable no-alert */
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
 import SocialButton from '../components/SocialButton';
-
+import {AuthContext} from '../navigation/AuthProvider';
 const SignupScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [comfirmPassword, setComfirmPassword] = useState('');
+
+  const {register} = useContext(AuthContext);
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Create an Account</Text>
@@ -37,7 +40,10 @@ const SignupScreen = ({navigation}) => {
         iconType="lock"
         secureTextEntry={true}
       />
-      <FormButton buttonTitle="Sign Up" onPress={() => alert('Sign UP!')} />
+      <FormButton
+        buttonTitle="Sign Up"
+        onPress={() => register(email, password)}
+      />
 
       <View style={styles.textPrivate}>
         <Text style={styles.color_textPrivate}>
