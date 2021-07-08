@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable no-alert */
 import React from 'react';
-import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {Text, View, TouchableOpacity, Image} from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 const Dots = ({selected}) => {
   let backgroundColor;
