@@ -1,10 +1,11 @@
+/* eslint-disable no-alert */
 import React from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
 
 const ChatScreen = () => {
   return (
-    <View>
-      <Text style={styles.container}>Chat Screen</Text>
+    <View style={styles.container}>
+      <Text>Chat Screen</Text>
       <Button title="Click me" onPress={() => alert('button clicked')} />
     </View>
   );
