@@ -122,7 +122,7 @@ const AppStack = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Profile',
           tabBarIcon: ({color, size}) => (
             <Ionicons name="person-outline" color={color} size={size} />
           ),
