@@ -53,6 +53,10 @@ const AddPostScreen = () => {
   const submitPost = async () => {
     const uploadUri = image;
     let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
+    // add timestamp to file name
+    const extension = filename.split('.').pop();
+    const name = filename.split('.').slice(0, -1).join('.');
+    filename = name + Date.now() + '.' + extension;
     setUploading(true);
     setTransferred(0);
     const task = storage().ref(filename).putFile(uploadUri);
