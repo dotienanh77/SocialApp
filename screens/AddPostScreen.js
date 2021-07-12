@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Platform} from 'react-native';
+import {View, StyleSheet, Platform, Alert} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -12,8 +12,13 @@ import {
   SubmitBtnText,
 } from '../styles/AddPost';
 
+import storage from '@react-native-firebase/storage';
+
 const AddPostScreen = () => {
   const [image, setImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [transferred, setTransferred] = useState(0);
+  const [post, setPost] = useState(null);
 
   const takePhotoFromCamera = () => {
     ImagePicker.openCamera({
@@ -37,6 +42,25 @@ const AddPostScreen = () => {
       setImage(imageUri);
     });
   };
+
+  const submitPost = async () => {
+    const uploadUri = image;
+    let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
+    setUploading(true);
+    try {
+      await storage().ref(filename).putFile(uploadUri);
+
+      setUploading(false);
+      Alert.alert(
+        'Image uploaded',
+        'Your image has been uploaded to the Firebase Cloud Storage Successfully!',
+      );
+    } catch (e) {
+      console.log(e);
+    }
+    setImage(null);
+  };
+
   return (
     <View style={styles.container}>
       <InputWrapper>
@@ -46,6 +70,9 @@ const AddPostScreen = () => {
           multiline={true}
           numberOfLines={4}
         />
+        <SubmitBtn onPress={submitPost}>
+          <SubmitBtnText>Post</SubmitBtnText>
+        </SubmitBtn>
       </InputWrapper>
       <ActionButton buttonColor="#2e64e5">
         <ActionButton.Item
@@ -72,5 +99,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  actionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: 'white',
   },
 });
