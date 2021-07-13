@@ -38,15 +38,15 @@ const PostCard = ({item}) => {
   return (
     <Card>
       <UserInfo>
-        <UserImg source={item.userImg} />
+        <UserImg source={{uri: item.userImg}} />
         <UserInfoText>
           <UserName>{item.userName}</UserName>
-          <PostTime>{item.postTime}</PostTime>
+          <PostTime>{item.postTime.toString()}</PostTime>
         </UserInfoText>
       </UserInfo>
       <PostText>{item.post}</PostText>
-      {item.postImg !== 'none' ? (
-        <PostImg source={item.postImg} />
+      {item.postImg !== null ? (
+        <PostImg source={{uri: item.postImg}} />
       ) : (
         <Divider />
       )}
