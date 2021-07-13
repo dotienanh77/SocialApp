@@ -85,6 +85,9 @@ const AddPostScreen = () => {
   };
 
   const uploadImage = async () => {
+    if(image === null) {
+      return null;
+    }
     const uploadUri = image;
     let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
     // add timestamp to file name
