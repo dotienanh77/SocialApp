@@ -1,14 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  StyleSheet,
-  FlatList,
-  SafeAreaView,
-  Alert,
-} from 'react-native';
+import {FlatList, Alert} from 'react-native';
 
 import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
@@ -75,46 +67,72 @@ const Posts = [
 const HomeScreen = () => {
   const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const list = [];
-        await firestore()
-          .collection('posts')
-          .orderBy('postTime', 'desc')
-          .get()
-          .then(querySnapshot => {
-            // console.log('Total Posts: ', querySnapshot.size);
-            querySnapshot.forEach(doc => {
-              const {post, userId, postImg, postTime, likes, comments} =
-                doc.data();
-              list.push({
-                id: doc.id,
-                userId,
-                userName: 'Test name',
-                userImg:
-                  'https://firebasestorage.googleapis.com:443/v0/b/rn-social-app-3f8fb.appspot.com/o/photos%2FIMG_00021626147218325.JPG?alt=media&token=38a1da53-1121-4ca5-b68e-ea0e6d219ff5',
-                postTime: postTime,
-                post,
-                postImg,
-                liked: false,
-                likes,
-                comments,
-              });
+  const [deleted, setDeleted] = useState(false);
+  const fetchPosts = async () => {
+    try {
+      const list = [];
+      await firestore()
+        .collection('posts')
+        .orderBy('postTime', 'desc')
+        .get()
+        .then(querySnapshot => {
+          // console.log('Total Posts: ', querySnapshot.size);
+          querySnapshot.forEach(doc => {
+            const {post, userId, postImg, postTime, likes, comments} =
+              doc.data();
+            list.push({
+              id: doc.id,
+              userId,
+              userName: 'Test name',
+              userImg:
+                'https://firebasestorage.googleapis.com:443/v0/b/rn-social-app-3f8fb.appspot.com/o/photos%2FIMG_00021626147218325.JPG?alt=media&token=38a1da53-1121-4ca5-b68e-ea0e6d219ff5',
+              postTime: postTime,
+              post,
+              postImg,
+              liked: false,
+              likes,
+              comments,
             });
           });
+        });
 
-        setPosts(list);
-        if (loading) {
-          setLoading(false);
-        }
-        console.log('Post: ', list);
-      } catch (e) {
-        console.log(e);
+      setPosts(list);
+      if (loading) {
+        setLoading(false);
       }
-    };
+      console.log('Post: ', list);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
     fetchPosts();
   }, []);
+
+  useEffect(() => {
+    fetchPosts();
+    setDeleted(false);
+  }, [deleted]);
+
+  const handleDelete = postId => {
+    Alert.alert(
+      'Delete post',
+      'Are you sure?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Comfirm',
+          onPress: () => deletePost(postId),
+        },
+      ],
+      {cancelable: false},
+    );
+  };
+
   const deletePost = postId => {
     console.log('Current post Id:  ', postId);
     firestore()
@@ -133,10 +151,14 @@ const HomeScreen = () => {
               .then(() => {
                 console.log(`${postImg} has been deleted successfully.`);
                 deleteFirestoreData(postId);
+                setDeleted(true);
               })
               .catch(e => {
                 console.log('Eror while deleting the Image. ', e);
               });
+            // if the post image not available
+          } else {
+            deleteFirestoreData(postId);
           }
         }
       });
@@ -160,7 +182,9 @@ const HomeScreen = () => {
     <Container>
       <FlatList
         data={posts}
-        renderItem={({item}) => <PostCard item={item} onDelete={deletePost} />}
+        renderItem={({item}) => (
+          <PostCard item={item} onDelete={handleDelete} />
+        )}
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
       />

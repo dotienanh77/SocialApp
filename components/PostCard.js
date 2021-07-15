@@ -16,7 +16,7 @@ import {
 } from '../styles/FeedStyles';
 import {AuthContext} from '../navigation/AuthProvider';
 const PostCard = ({item, onDelete}) => {
-  const {user, logout} = useContext(AuthContext);
+  const {user} = useContext(AuthContext);
   let likeIcon = item.liked ? 'heart' : 'heart-outline';
   let likeIconColor = item.liked ? '#2e64e5' : '#333';
   let likeText;
