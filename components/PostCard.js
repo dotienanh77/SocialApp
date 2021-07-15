@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
   Card,
@@ -14,8 +14,9 @@ import {
   Interaction,
   Divider,
 } from '../styles/FeedStyles';
-
-const PostCard = ({item}) => {
+import {AuthContext} from '../navigation/AuthProvider';
+const PostCard = ({item, onDelete}) => {
+  const {user, logout} = useContext(AuthContext);
   let likeIcon = item.liked ? 'heart' : 'heart-outline';
   let likeIconColor = item.liked ? '#2e64e5' : '#333';
   let likeText;
@@ -59,6 +60,11 @@ const PostCard = ({item}) => {
           <Ionicons name="md-chatbubble-outline" size={25} />
           <InteractionText>{commentText}</InteractionText>
         </Interaction>
+        {user.uid === item.userId ? (
+          <Interaction onPress={() => onDelete(item.id)}>
+            <Ionicons name="md-trash-bin" size={25} />
+          </Interaction>
+        ) : null}
       </InteractionWrapper>
     </Card>
   );

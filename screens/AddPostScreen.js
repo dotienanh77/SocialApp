@@ -85,7 +85,7 @@ const AddPostScreen = () => {
   };
 
   const uploadImage = async () => {
-    if(image === null) {
+    if (image === null) {
       return null;
     }
     const uploadUri = image;
@@ -116,10 +116,10 @@ const AddPostScreen = () => {
 
       setUploading(false);
       setImage(null);
-      Alert.alert(
-        'Image uploaded',
-        'Your image has been uploaded to the Firebase Cloud Storage Successfully!',
-      );
+      // Alert.alert(
+      //   'Image uploaded',
+      //   'Your image has been uploaded to the Firebase Cloud Storage Successfully!',
+      // );
       return url;
     } catch (e) {
       console.log(e);
@@ -135,6 +135,7 @@ const AddPostScreen = () => {
           placeholder="What's do you mind?"
           multiline={true}
           numberOfLines={4}
+          value={post}
           onChangeText={content => {
             setPost(content);
           }}
