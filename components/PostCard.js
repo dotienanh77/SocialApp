@@ -14,6 +14,7 @@ import {
   Interaction,
   Divider,
 } from '../styles/FeedStyles';
+import moment from 'moment';
 import {AuthContext} from '../navigation/AuthProvider';
 const PostCard = ({item, onDelete}) => {
   const {user} = useContext(AuthContext);
@@ -42,7 +43,7 @@ const PostCard = ({item, onDelete}) => {
         <UserImg source={{uri: item.userImg}} />
         <UserInfoText>
           <UserName>{item.userName}</UserName>
-          <PostTime>{item.postTime.toString()}</PostTime>
+          <PostTime>{moment(item.postTime.toDate()).fromNow()}</PostTime>
         </UserInfoText>
       </UserInfo>
       <PostText>{item.post}</PostText>
