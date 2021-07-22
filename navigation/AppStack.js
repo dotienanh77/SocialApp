@@ -85,7 +85,12 @@ const FeedStack = ({navigation}) => (
     />
   </Stack.Navigator>
 );
-
+const MessageStack = ({navigation}) => (
+  <Stack.Navigator>
+    <Stack.Screen name="Messages" component={MessageScreen} />
+    <Stack.Screen name="Chat" component={ChatScreen} />
+  </Stack.Navigator>
+);
 const AppStack = () => {
   return (
     <Tab.Navigator
@@ -105,7 +110,7 @@ const AppStack = () => {
 
       <Tab.Screen
         name="Massages"
-        component={ChatScreen}
+        component={MessageStack}
         options={{
           // tabBarLabel: 'Home',
           tabBarIcon: ({color, size}) => (

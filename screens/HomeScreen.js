@@ -83,9 +83,10 @@ const HomeScreen = () => {
             list.push({
               id: doc.id,
               userId,
-              userName: 'Test name',
+              userName: 'Do Tien Anh',
               userImg:
-                'https://firebasestorage.googleapis.com:443/v0/b/rn-social-app-3f8fb.appspot.com/o/photos%2FIMG_00021626147218325.JPG?alt=media&token=38a1da53-1121-4ca5-b68e-ea0e6d219ff5',
+                'https://scontent.fhan14-2.fna.fbcdn.net/v/t1.6435-9/122847203_2646676188917696_6760410869076075874_n.jpg?_nc_cat=103&ccb=1-3&_nc_sid=174925&_nc_ohc=0FZ0-l2XMWMAX9DGhm2&tn=b5ZRpATkMYbG8fL2&_nc_ht=scontent.fhan14-2.fna&oh=df1d8b2da47e86f4f8924a118beec3ee&oe=60FE0B75',
+              // 'https://firebasestorage.googleapis.com:443/v0/b/rn-social-app-3f8fb.appspot.com/o/photos%2FIMG_00021626147218325.JPG?alt=media&token=38a1da53-1121-4ca5-b68e-ea0e6d219ff5',
               postTime: postTime,
               post,
               postImg,
