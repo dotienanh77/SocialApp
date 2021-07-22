@@ -99,6 +99,16 @@ const MessageStack = ({navigation}) => (
   </Stack.Navigator>
 );
 const AppStack = () => {
+  const getTabBarVisibility = route => {
+    const rountName = route.state
+      ? route.state.routes[route.state.index].name
+      : '';
+
+    if (rountName === 'Chat') {
+      return false;
+    }
+    return true;
+  };
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -118,7 +128,9 @@ const AppStack = () => {
       <Tab.Screen
         name="Massages"
         component={MessageStack}
-        options={{
+        options={({route}) => ({
+          tabBarVisible: getTabBarVisibility(route),
+          // tabBarVisible: route.state && route.index === 0,
           // tabBarLabel: 'Home',
           tabBarIcon: ({color, size}) => (
             <Ionicons
@@ -127,7 +139,7 @@ const AppStack = () => {
               size={size}
             />
           ),
-        }}
+        })}
       />
 
       <Tab.Screen
