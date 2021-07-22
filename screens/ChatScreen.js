@@ -1,6 +1,7 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
-import {GiftedChat, Bubble} from 'react-native-gifted-chat';
+import {GiftedChat, Bubble, Send} from 'react-native-gifted-chat';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 const ChatScreen = () => {
   const [messages, setMessages] = useState([]);
 
@@ -34,7 +35,20 @@ const ChatScreen = () => {
       GiftedChat.append(previousMessages, messages),
     );
   }, []);
-
+  const renderSend = props => {
+    return (
+      <Send {...props}>
+        <View>
+          <MaterialCommunityIcons
+            style={{marginBottom: 5, marginRight: 5}}
+            name="send-circle"
+            size={32}
+            color="#2e64e5"
+          />
+        </View>
+      </Send>
+    );
+  };
   const renderBubble = props => {
     return (
       <Bubble
@@ -60,6 +74,8 @@ const ChatScreen = () => {
         _id: 1,
       }}
       renderBubble={renderBubble}
+      // alwaysShowSend
+      renderSend={renderSend}
     />
   );
 };
