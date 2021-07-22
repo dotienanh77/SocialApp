@@ -62,7 +62,10 @@ const MessageScreen = ({navigation}) => {
         data={Messages}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
-          <Card onPress={() => navigation.navigate('Chat')}>
+          <Card
+            onPress={() =>
+              navigation.navigate('Chat', {userName: item.userName})
+            }>
             <UserInfo>
               <UserImgWrapper>
                 <UserImg source={item.userImg} />
