@@ -2,6 +2,7 @@ import React, {useEffect, useState, useCallback} from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
 import {GiftedChat, Bubble, Send} from 'react-native-gifted-chat';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const ChatScreen = () => {
   const [messages, setMessages] = useState([]);
 
@@ -66,6 +67,11 @@ const ChatScreen = () => {
       />
     );
   };
+
+  const scrollToBottomComponent = () => {
+    return <FontAwesome name="angle-double-down" size={22} color="#333" />;
+  };
+
   return (
     <GiftedChat
       messages={messages}
@@ -76,6 +82,8 @@ const ChatScreen = () => {
       renderBubble={renderBubble}
       // alwaysShowSend
       renderSend={renderSend}
+      scrollToBottom
+      scrollToBottomComponent={scrollToBottomComponent}
     />
   );
 };
