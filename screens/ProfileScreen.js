@@ -23,7 +23,7 @@ const HomeScreen = () => {
       const list = [];
       await firestore()
         .collection('posts')
-        .where('userId', user.uid)
+        .where('userId', '==', user.uid)
         .orderBy('postTime', 'desc')
         .get()
         .then(querySnapshot => {
@@ -60,7 +60,7 @@ const HomeScreen = () => {
   useEffect(() => {
     fetchPosts();
   }, []);
-  const handleDelete = () => {}; 
+  const handleDelete = () => {};
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <ScrollView
