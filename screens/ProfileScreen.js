@@ -14,7 +14,7 @@ import {
 import FormButton from '../components/FormButton';
 import PostCard from '../components/PostCard';
 import {AuthContext} from '../navigation/AuthProvider';
-const HomeScreen = () => {
+const HomeScreen = ({navigation, route}) => {
   const {user, logout} = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -75,16 +75,34 @@ const HomeScreen = () => {
           source={require('../assets/users/user-7.jpg')}
         />
         <Text style={styles.userName}>Jessica</Text>
+        <Text>{route.params ? route.params.userId : user.uid}</Text>
         <Text style={styles.aboutUser}>
           You only live once, but if you do it right, once is enough
         </Text>
         <View style={styles.userBtnWrapper}>
-          <TouchableOpacity style={styles.userBtn} onPress={() => {}}>
-            <Text style={styles.userBtnTxt}> Message </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.userBtn} onPress={() => {}}>
-            <Text style={styles.userBtnTxt}> Follow </Text>
-          </TouchableOpacity>
+          {route.params ? (
+            <>
+              <TouchableOpacity style={styles.userBtn} onPress={() => {}}>
+                <Text style={styles.userBtnTxt}> Message </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.userBtn} onPress={() => {}}>
+                <Text style={styles.userBtnTxt}> Follow </Text>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <>
+              <TouchableOpacity
+                style={styles.userBtn}
+                onPress={() => {
+                  navigation.navigate('EditProfile');
+                }}>
+                <Text style={styles.userBtnTxt}> Edit </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.userBtn} onPress={() => logout()}>
+                <Text style={styles.userBtnTxt}> Logout </Text>
+              </TouchableOpacity>
+            </>
+          )}
         </View>
         <View style={styles.userInfoWrapper}>
           <View style={styles.userInfoItem}>

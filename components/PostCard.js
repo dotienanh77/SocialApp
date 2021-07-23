@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {TouchableOpacity} from 'react-native';
 import {
   Card,
   UserInfo,
@@ -16,7 +17,7 @@ import {
 } from '../styles/FeedStyles';
 import moment from 'moment';
 import {AuthContext} from '../navigation/AuthProvider';
-const PostCard = ({item, onDelete}) => {
+const PostCard = ({item, onDelete, onPress}) => {
   const {user} = useContext(AuthContext);
   let likeIcon = item.liked ? 'heart' : 'heart-outline';
   let likeIconColor = item.liked ? '#2e64e5' : '#333';
@@ -42,7 +43,9 @@ const PostCard = ({item, onDelete}) => {
       <UserInfo>
         <UserImg source={{uri: item.userImg}} />
         <UserInfoText>
-          <UserName>{item.userName}</UserName>
+          <TouchableOpacity onPress={onPress}>
+            <UserName>{item.userName}</UserName>
+          </TouchableOpacity>
           <PostTime>{moment(item.postTime.toDate()).fromNow()}</PostTime>
         </UserInfoText>
       </UserInfo>
